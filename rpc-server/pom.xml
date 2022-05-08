@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>rpc-project</artifactId>
-        <groupId>com.yongda</groupId>
+        <artifactId>mini-rpc</artifactId>
+        <groupId>com.rpc.mini</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,22 +13,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.yongda</groupId>
+            <groupId>com.rpc.mini</groupId>
             <artifactId>rpc-transport</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.yongda</groupId>
+            <groupId>com.rpc.mini</groupId>
             <artifactId>rpc-codec</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.yongda</groupId>
+            <groupId>com.rpc.mini</groupId>
             <artifactId>rpc-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.yongda</groupId>
+            <groupId>com.rpc.mini</groupId>
             <artifactId>rpc-proto</artifactId>
             <version>${project.version}</version>
         </dependency>
