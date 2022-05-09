@@ -1,0 +1,5 @@
+yongda\rpc\server\registry\ServiceRegistry.class
+yongda\rpc\server\RpcServer.class
+yongda\rpc\server\config\RpcServerConfig.class
+yongda\rpc\server\service\ServiceInstance.class
+yongda\rpc\server\service\ServiceInvoker.class

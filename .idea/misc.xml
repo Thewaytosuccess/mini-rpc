@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/rpc-server/pom.xml" />
         <option value="$PROJECT_DIR$/rpc-client/pom.xml" />
         <option value="$PROJECT_DIR$/rpc-test/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>

@@ -3,8 +3,8 @@ package yongda.rpc.client;
 import yongda.rpc.client.config.RpcClientConfig;
 import yongda.rpc.client.invoker.RemoteInvokerHandler;
 import yongda.rpc.client.selector.TransportSelector;
-import yongda.rpc.codec.Decoder;
-import yongda.rpc.codec.Encoder;
+import yongda.rpc.codec.decoder.Decoder;
+import yongda.rpc.codec.encoder.Encoder;
 import yongda.rpc.common.ReflectionUtils;
 
 import java.lang.reflect.Proxy;

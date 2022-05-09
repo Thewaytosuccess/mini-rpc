@@ -1,10 +1,10 @@
 package yongda.rpc.server.config;
 
 import lombok.Data;
-import yongda.rpc.codec.Decoder;
-import yongda.rpc.codec.Encoder;
-import yongda.rpc.codec.impl.JSONDecoder;
-import yongda.rpc.codec.impl.JSONEncoder;
+import yongda.rpc.codec.decoder.Decoder;
+import yongda.rpc.codec.encoder.Encoder;
+import yongda.rpc.codec.decoder.impl.JSONDecoder;
+import yongda.rpc.codec.encoder.impl.JSONEncoder;
 import yongda.rpc.transport.server.TransportServer;
 import yongda.rpc.transport.server.impl.HttpTransportServer;
 

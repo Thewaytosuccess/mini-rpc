@@ -1,8 +1,8 @@
-package yongda.rpc.codec.impl;
+package yongda.rpc.codec.decoder.impl;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import yongda.rpc.codec.Decoder;
+import yongda.rpc.codec.decoder.Decoder;
 
 @Slf4j
 public class JSONDecoder implements Decoder {

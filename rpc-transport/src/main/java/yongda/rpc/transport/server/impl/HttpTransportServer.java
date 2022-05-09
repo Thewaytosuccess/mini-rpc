@@ -1,5 +1,6 @@
 package yongda.rpc.transport.server.impl;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -36,27 +37,21 @@ public class HttpTransportServer implements TransportServer {
         server.setHandler(ctx);
     }
 
+    @SneakyThrows
     @Override
     public void start() {
-        try {
-            //启动并等待连接
-            server.start();
+        //启动并等待连接
+        server.start();
 
-            //服务端启动后不立即关闭
-            server.join();
-        } catch (Exception e) {
-            log.error("server 启动失败:{}",e);
-        }
+        //服务端启动后不立即关闭
+        server.join();
 
     }
 
+    @SneakyThrows
     @Override
     public void stop() {
-        try {
-            server.stop();
-        } catch (Exception e) {
-            log.error("server 关闭失败:{}",e);
-        }
+        server.stop();
     }
 
     class RpcServlet extends HttpServlet{

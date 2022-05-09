@@ -1,0 +1,15 @@
+package yongda.rpc.transport.client.netty;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+
+/**
+ * 客户端处理器
+ */
+public class SimpleClientHandler extends SimpleChannelInboundHandler<String> {
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
+        System.out.println("content:" + s);
+    }
+}

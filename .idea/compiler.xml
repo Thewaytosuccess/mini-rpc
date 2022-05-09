@@ -6,16 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rpc-test" />
+        <module name="rpc-client" />
+        <module name="rpc-codec" />
         <module name="rpc-common" />
         <module name="rpc-proto" />
-        <module name="rpc-codec" />
         <module name="rpc-server" />
+        <module name="rpc-test" />
         <module name="rpc-transport" />
-        <module name="rpc-client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
+      <module name="mini-rpc" target="1.8" />
       <module name="rpc-client" target="1.8" />
       <module name="rpc-codec" target="1.8" />
       <module name="rpc-common" target="1.8" />

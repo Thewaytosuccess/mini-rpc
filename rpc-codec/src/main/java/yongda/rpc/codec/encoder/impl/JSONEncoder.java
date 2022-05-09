@@ -1,7 +1,7 @@
-package yongda.rpc.codec.impl;
+package yongda.rpc.codec.encoder.impl;
 
 import com.alibaba.fastjson.JSON;
-import yongda.rpc.codec.Encoder;
+import yongda.rpc.codec.encoder.Encoder;
 
 public class JSONEncoder implements Encoder {
 

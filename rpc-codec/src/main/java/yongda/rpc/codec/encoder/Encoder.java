@@ -1,4 +1,4 @@
-package yongda.rpc.codec;
+package yongda.rpc.codec.encoder;
 
 public interface Encoder {
 
