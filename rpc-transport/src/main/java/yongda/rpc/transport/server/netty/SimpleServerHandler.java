@@ -11,7 +11,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
  * channel管理和监听
  * @author cdl
  */
-public class SimpleChannelHandler extends SimpleChannelInboundHandler<String> {
+public class SimpleServerHandler extends SimpleChannelInboundHandler<String> {
 
     /**
      * 创建channelGroup管理channel
@@ -21,7 +21,7 @@ public class SimpleChannelHandler extends SimpleChannelInboundHandler<String> {
 
 
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+    public void handlerAdded(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         System.out.println("groupName:" + group.name());
         for(Channel c:group){
@@ -31,7 +31,7 @@ public class SimpleChannelHandler extends SimpleChannelInboundHandler<String> {
     }
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+    public void handlerRemoved(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         for(Channel c:group){
             c.writeAndFlush(c.remoteAddress() + "离开！\n");
@@ -40,19 +40,19 @@ public class SimpleChannelHandler extends SimpleChannelInboundHandler<String> {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         System.out.println(channel.remoteAddress() + "在线");
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         System.out.println(channel.remoteAddress() + "离线");
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         //获取发生异常的通道
         Channel channel = ctx.channel();
         System.out.println("ip:" + channel.remoteAddress() + "发生异常！");
@@ -63,7 +63,7 @@ public class SimpleChannelHandler extends SimpleChannelInboundHandler<String> {
     }
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, String s) throws Exception {
+    protected void messageReceived(ChannelHandlerContext ctx, String s) {
         Channel c = ctx.channel();
         for(Channel ch:group){
             if(ch != c){

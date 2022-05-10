@@ -42,9 +42,11 @@ public class NettyTransportClient implements TransportClient {
     public InputStream sendRequest(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
-        while(true){
-            channel.writeAndFlush(reader.readLine() + "\r\n");
-        }
+//        while(true){
+//            channel.writeAndFlush(reader.readLine() + "\r\n");
+//        }
+        channel.writeAndFlush(reader.readLine());
+        return is;
     }
 
     @Override

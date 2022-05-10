@@ -3,10 +3,8 @@ package yongda.rpc.transport.server.netty;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import yongda.rpc.codec.decoder.impl.NettyDecoder;
+import yongda.rpc.codec.encoder.impl.NettyEncoder;
 
 /**
  * 服务端初始化类
@@ -15,24 +13,26 @@ import io.netty.handler.codec.string.StringEncoder;
 public class SimpleServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
-    protected void initChannel(SocketChannel channel) throws Exception {
+    protected void initChannel(SocketChannel channel) {
         //管道线
         ChannelPipeline pipe = channel.pipeline();
 
         //分隔符
-        pipe.addLast("framer", new DelimiterBasedFrameDecoder(8192,
-                Delimiters.lineDelimiter()));
+//        pipe.addLast("framer", new DelimiterBasedFrameDecoder(8192,
+//                Delimiters.lineDelimiter()));
 
         //解码器
-        pipe.addLast("decoder",new StringDecoder());
+//        pipe.addLast("decoder",new StringDecoder());
+        pipe.addLast("decoder",new NettyDecoder());
 
         //编码器
-        pipe.addLast("encoder", new StringEncoder());
+//        pipe.addLast("encoder", new StringEncoder());
+        pipe.addLast("encoder",new NettyEncoder());
 
         //处理器
-        pipe.addLast("handler",new SimpleChannelHandler());
+        pipe.addLast("handler",new SimpleServerHandler());
 
-        System.out.println("ip:"+channel.remoteAddress()+"建立连接");
+        System.out.println("ip:" + channel.remoteAddress() + "建立连接");
     }
 
 }
