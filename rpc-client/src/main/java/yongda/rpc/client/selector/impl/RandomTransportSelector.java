@@ -38,7 +38,8 @@ public class RandomTransportSelector implements TransportSelector {
      */
     @Override
     public TransportClient select() {
-        return clients.remove(new Random().nextInt(clients.size()));
+        return clients.size() == 1 ? clients.remove(0) :
+                clients.remove(new Random().nextInt(clients.size()));
     }
 
     @Override

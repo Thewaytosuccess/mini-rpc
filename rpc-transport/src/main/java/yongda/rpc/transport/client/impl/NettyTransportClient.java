@@ -6,15 +6,23 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import yongda.rpc.proto.Peer;
+import yongda.rpc.proto.Request;
+import yongda.rpc.proto.Response;
 import yongda.rpc.transport.client.TransportClient;
+import yongda.rpc.transport.client.netty.RpcContextHolder;
 import yongda.rpc.transport.client.netty.SimpleClientInitializer;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * @author cdl
+ */
+@Slf4j
 public class NettyTransportClient implements TransportClient {
 
     private EventLoopGroup worker;
@@ -39,14 +47,24 @@ public class NettyTransportClient implements TransportClient {
 
     @SneakyThrows
     @Override
-    public InputStream sendRequest(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    public Response sendRequest(Request request) {
+        String requestId = UUID.randomUUID().toString();
+        request.setRequestId(requestId);
 
-//        while(true){
-//            channel.writeAndFlush(reader.readLine() + "\r\n");
-//        }
-        channel.writeAndFlush(reader.readLine());
-        return is;
+        //预相应
+        CompletableFuture<Response> promise = RpcContextHolder.getFuture(requestId);
+        promise.thenRunAsync(() -> {
+            //send request
+            channel.writeAndFlush(request).addListener(e -> {
+                if(e.isSuccess()){
+                    log.info("send request success");
+                }
+            });
+        });
+
+        //阻塞，以获取结果
+        long timeout = 10;
+        return promise.get(timeout, TimeUnit.SECONDS);
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
  * @author cdl
  */
 @Slf4j
-public class RemoteInvokerHandler<T> implements InvocationHandler {
+public class RemoteHttpInvoker<T> implements InvocationHandler {
 
     /**
      * 编码器：用来将客户端请求参数序列化
@@ -44,8 +44,8 @@ public class RemoteInvokerHandler<T> implements InvocationHandler {
      */
     private Class<T> clazz;
 
-    public RemoteInvokerHandler(Class<T> clazz, Encoder encoder, Decoder decoder,
-                         TransportSelector selector) {
+    public RemoteHttpInvoker(Class<T> clazz, Encoder encoder, Decoder decoder,
+                             TransportSelector selector) {
         this.clazz = clazz;
         this.encoder = encoder;
         this.decoder = decoder;

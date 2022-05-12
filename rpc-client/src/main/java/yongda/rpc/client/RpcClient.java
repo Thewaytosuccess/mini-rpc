@@ -1,12 +1,14 @@
 package yongda.rpc.client;
 
 import yongda.rpc.client.config.RpcClientConfig;
-import yongda.rpc.client.invoker.RemoteInvokerHandler;
+import yongda.rpc.client.invoker.RemoteHttpInvoker;
+import yongda.rpc.client.invoker.RemoteNettyInvoker;
 import yongda.rpc.client.selector.TransportSelector;
 import yongda.rpc.codec.decoder.Decoder;
 import yongda.rpc.codec.encoder.Encoder;
 import yongda.rpc.common.ReflectionUtils;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
@@ -39,8 +41,12 @@ public class RpcClient {
      * @return 接口实例
      */
     public <T> T getProxy(Class<T> clazz){
+//        InvocationHandler handler = new RemoteHttpInvoker(clazz,encoder,
+//                decoder,selector);
+
+        InvocationHandler handler = new RemoteNettyInvoker(clazz,selector);
+
         return (T)Proxy.newProxyInstance(getClass().getClassLoader(),
-                new Class[]{clazz},new RemoteInvokerHandler(clazz,encoder,
-                        decoder,selector));
+                new Class[]{clazz},handler);
     }
 }

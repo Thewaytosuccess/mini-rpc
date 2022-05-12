@@ -6,13 +6,16 @@ import lombok.NoArgsConstructor;
 
 /**
  * 服务响应
+ * @author cdl
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Response {
 
-    private int code = 1;
+    private String requestId;
+
+    private int code = 200;
 
     private String message = "success";
 

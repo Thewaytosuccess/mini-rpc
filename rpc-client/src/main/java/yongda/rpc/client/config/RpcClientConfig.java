@@ -10,6 +10,7 @@ import yongda.rpc.codec.encoder.impl.JSONEncoder;
 import yongda.rpc.proto.Peer;
 import yongda.rpc.transport.client.TransportClient;
 import yongda.rpc.transport.client.impl.HttpTransportClient;
+import yongda.rpc.transport.client.impl.NettyTransportClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,8 @@ public class RpcClientConfig {
     /**
      * 客户端
      */
-    private Class<? extends TransportClient> client = HttpTransportClient.class;
+    //private Class<? extends TransportClient> client = HttpTransportClient.class;
+    private Class<? extends TransportClient> client = NettyTransportClient.class;
 
     /**
      * 编码器

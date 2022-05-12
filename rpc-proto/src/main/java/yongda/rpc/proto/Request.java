@@ -6,11 +6,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * 网络请求
+ * @author cdl
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Request {
+
+    private String requestId;
 
     private ServiceDescriptor serviceDescriptor;
 
