@@ -11,5 +11,11 @@
 
     <artifactId>rpc-proto</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.rpc.mini</groupId>
+            <artifactId>rpc-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

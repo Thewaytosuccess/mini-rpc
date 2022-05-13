@@ -1,8 +1,9 @@
-package yongda.rpc.proto;
+package yongda.rpc.proto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yongda.rpc.proto.service.ServiceDescriptor;
 
 /**
  * 网络请求

@@ -6,37 +6,40 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import yongda.rpc.proto.registry.ServiceRegistry;
+import yongda.rpc.proto.request.Request;
+import yongda.rpc.proto.response.Response;
+import yongda.rpc.proto.util.ServiceInvoker;
 
 /**
  * channel管理和监听
  * @author cdl
  */
-public class SimpleServerHandler extends SimpleChannelInboundHandler<String> {
+public class SimpleServerHandler extends SimpleChannelInboundHandler<Request> {
 
     /**
      * 创建channelGroup管理channel
      */
-    private static ChannelGroup group = new DefaultChannelGroup(
+    private static final ChannelGroup CHANNEL_GROUP = new DefaultChannelGroup(
             GlobalEventExecutor.INSTANCE);
-
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
-        System.out.println("groupName:" + group.name());
-        for(Channel c:group){
+        System.out.println("groupName:" + CHANNEL_GROUP.name());
+        for(Channel c:CHANNEL_GROUP){
             c.writeAndFlush(c.remoteAddress() + "加入！\n");
         }
-        group.add(channel);
+        CHANNEL_GROUP.add(channel);
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
-        for(Channel c:group){
+        for(Channel c:CHANNEL_GROUP){
             c.writeAndFlush(c.remoteAddress() + "离开！\n");
         }
-        group.remove(channel);
+        CHANNEL_GROUP.remove(channel);
     }
 
     @Override
@@ -63,14 +66,11 @@ public class SimpleServerHandler extends SimpleChannelInboundHandler<String> {
     }
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, String s) {
+    protected void messageReceived(ChannelHandlerContext ctx, Request request) {
         Channel c = ctx.channel();
-        for(Channel ch:group){
-            if(ch != c){
-                ch.writeAndFlush("【" + ch.remoteAddress() + "】" + s + "\n");
-            }else{
-                ch.writeAndFlush("【you】" + s + "\n");
-            }
-        }
+        //根据request对象查找服务，调用服务，将结果序列化输出
+        Response response = new Response();
+        response.setData(ServiceInvoker.invoke(ServiceRegistry.getInstance().get(request),request));
+        c.writeAndFlush(response);
     }
 }

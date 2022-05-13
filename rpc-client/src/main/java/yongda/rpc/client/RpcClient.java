@@ -7,6 +7,8 @@ import yongda.rpc.client.selector.TransportSelector;
 import yongda.rpc.codec.decoder.Decoder;
 import yongda.rpc.codec.encoder.Encoder;
 import yongda.rpc.common.ReflectionUtils;
+import yongda.rpc.transport.client.impl.HttpTransportClient;
+import yongda.rpc.transport.client.impl.NettyTransportClient;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -17,9 +19,7 @@ import java.lang.reflect.Proxy;
  */
 public class RpcClient {
 
-    private Encoder encoder;
-
-    private Decoder decoder;
+    private RpcClientConfig config;
 
     private TransportSelector selector;
 
@@ -27,9 +27,8 @@ public class RpcClient {
         this(new RpcClientConfig());
     }
 
-    public RpcClient(RpcClientConfig config){
-        this.encoder = ReflectionUtils.newInstance(config.getEncoder());
-        this.decoder = ReflectionUtils.newInstance(config.getDecoder());
+    private RpcClient(RpcClientConfig config){
+        this.config = config;
         this.selector = ReflectionUtils.newInstance(config.getSelector());
         this.selector.init(config.getPeers(),config.getCount(),config.getClient());
     }
@@ -41,10 +40,15 @@ public class RpcClient {
      * @return 接口实例
      */
     public <T> T getProxy(Class<T> clazz){
-//        InvocationHandler handler = new RemoteHttpInvoker(clazz,encoder,
-//                decoder,selector);
+        InvocationHandler handler;
 
-        InvocationHandler handler = new RemoteNettyInvoker(clazz,selector);
+        if(this.config.getClient() == HttpTransportClient.class){
+            Encoder encoder = ReflectionUtils.newInstance(config.getEncoder());
+            Decoder decoder = ReflectionUtils.newInstance(config.getDecoder());
+            handler = new RemoteHttpInvoker<>(clazz,encoder, decoder,selector);
+        }else{
+            handler = new RemoteNettyInvoker<>(clazz,selector);
+        }
 
         return (T)Proxy.newProxyInstance(getClass().getClassLoader(),
                 new Class[]{clazz},handler);

@@ -1,6 +1,6 @@
 package yongda.rpc.transport.client.netty;
 
-import yongda.rpc.proto.Response;
+import yongda.rpc.proto.response.Response;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

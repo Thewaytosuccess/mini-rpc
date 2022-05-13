@@ -2,10 +2,9 @@ package yongda.rpc.client.invoker;
 
 import lombok.extern.slf4j.Slf4j;
 import yongda.rpc.client.selector.TransportSelector;
-import yongda.rpc.proto.Request;
-import yongda.rpc.proto.Response;
-import yongda.rpc.proto.ServiceDescriptor;
-import yongda.rpc.transport.client.TransportClient;
+import yongda.rpc.proto.request.Request;
+import yongda.rpc.proto.response.Response;
+import yongda.rpc.proto.service.ServiceDescriptor;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

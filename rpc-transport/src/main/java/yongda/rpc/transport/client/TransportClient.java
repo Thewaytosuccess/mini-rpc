@@ -1,8 +1,8 @@
 package yongda.rpc.transport.client;
 
 import yongda.rpc.proto.Peer;
-import yongda.rpc.proto.Request;
-import yongda.rpc.proto.Response;
+import yongda.rpc.proto.request.Request;
+import yongda.rpc.proto.response.Response;
 
 import java.io.InputStream;
 

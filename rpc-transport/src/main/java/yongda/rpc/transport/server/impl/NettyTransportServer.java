@@ -19,15 +19,17 @@ public class NettyTransportServer implements TransportServer {
 
     private EventLoopGroup workGroup;
 
-    private ChannelFuture channelFuture;
+    private int port;
 
     @Override
     public void init(int port, RequestHandler handler) {
-        startNettyServer(port);
+        this.port = port;
     }
 
+
     @SneakyThrows
-    private void startNettyServer(int port) {
+    @Override
+    public void start() {
         bossGroup = new NioEventLoopGroup();
         workGroup = new NioEventLoopGroup();
 
@@ -43,12 +45,7 @@ public class NettyTransportServer implements TransportServer {
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
 
         //绑定端口，接收连接
-        channelFuture = server.bind(port).sync();
-    }
-
-    @SneakyThrows
-    @Override
-    public void start() {
+        ChannelFuture channelFuture = server.bind(port).sync();
         //关闭
         channelFuture.channel().closeFuture().sync();
     }

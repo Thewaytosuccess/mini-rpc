@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import yongda.rpc.proto.Request;
+import yongda.rpc.proto.request.Request;
 
 import java.util.List;
 

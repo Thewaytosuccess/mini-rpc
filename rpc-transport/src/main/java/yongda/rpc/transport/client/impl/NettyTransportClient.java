@@ -8,9 +8,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import yongda.rpc.proto.Peer;
-import yongda.rpc.proto.Request;
-import yongda.rpc.proto.Response;
-import yongda.rpc.transport.client.TransportClient;
+import yongda.rpc.proto.request.Request;
+import yongda.rpc.proto.response.Response;
 import yongda.rpc.transport.client.netty.RpcContextHolder;
 import yongda.rpc.transport.client.netty.SimpleClientInitializer;
 

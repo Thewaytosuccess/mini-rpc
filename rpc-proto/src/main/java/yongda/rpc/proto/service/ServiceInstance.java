@@ -1,4 +1,4 @@
-package yongda.rpc.server.service;
+package yongda.rpc.proto.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

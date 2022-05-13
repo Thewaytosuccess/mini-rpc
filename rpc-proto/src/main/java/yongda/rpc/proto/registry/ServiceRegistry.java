@@ -1,9 +1,9 @@
-package yongda.rpc.server.registry;
+package yongda.rpc.proto.registry;
 
-import yongda.rpc.proto.Request;
-import yongda.rpc.proto.ServiceDescriptor;
+import yongda.rpc.proto.request.Request;
+import yongda.rpc.proto.service.ServiceDescriptor;
 import yongda.rpc.common.ReflectionUtils;
-import yongda.rpc.server.service.ServiceInstance;
+import yongda.rpc.proto.service.ServiceInstance;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -16,10 +16,16 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ServiceRegistry {
 
+    private static ServiceRegistry serviceRegistry = new ServiceRegistry();
+
     private Map<ServiceDescriptor, ServiceInstance> registry;
 
-    public ServiceRegistry(){
+    private ServiceRegistry(){
         this.registry = new ConcurrentHashMap<>();
+    }
+
+    public static ServiceRegistry getInstance(){
+        return serviceRegistry;
     }
 
     /**

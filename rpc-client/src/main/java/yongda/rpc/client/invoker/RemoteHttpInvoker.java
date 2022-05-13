@@ -5,9 +5,9 @@ import org.apache.commons.io.IOUtils;
 import yongda.rpc.client.selector.TransportSelector;
 import yongda.rpc.codec.decoder.Decoder;
 import yongda.rpc.codec.encoder.Encoder;
-import yongda.rpc.proto.Request;
-import yongda.rpc.proto.Response;
-import yongda.rpc.proto.ServiceDescriptor;
+import yongda.rpc.proto.request.Request;
+import yongda.rpc.proto.response.Response;
+import yongda.rpc.proto.service.ServiceDescriptor;
 import yongda.rpc.transport.client.TransportClient;
 
 import java.io.ByteArrayInputStream;

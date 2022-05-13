@@ -1,5 +1,6 @@
 package yongda;
 
+import yongda.rpc.proto.registry.ServiceRegistry;
 import yongda.rpc.server.RpcServer;
 
 /**
@@ -32,9 +33,8 @@ import yongda.rpc.server.RpcServer;
 public class TestServer {
 
     public static void main(String[] args) {
-        RpcServer server = new RpcServer();
-        server.register(CalculateFacade.class,new CalculateService());
-        server.start();
+        ServiceRegistry.getInstance().register(CalculateFacade.class,new CalculateService());
+        new RpcServer().start();
 
     }
 }

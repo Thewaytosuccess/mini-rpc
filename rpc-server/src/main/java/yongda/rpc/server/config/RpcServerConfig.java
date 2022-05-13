@@ -7,6 +7,7 @@ import yongda.rpc.codec.decoder.impl.JSONDecoder;
 import yongda.rpc.codec.encoder.impl.JSONEncoder;
 import yongda.rpc.transport.server.TransportServer;
 import yongda.rpc.transport.server.impl.HttpTransportServer;
+import yongda.rpc.transport.server.impl.NettyTransportServer;
 
 /**
  * 服务端默认配置
@@ -15,7 +16,9 @@ import yongda.rpc.transport.server.impl.HttpTransportServer;
 @Data
 public class RpcServerConfig {
 
-    private Class<? extends TransportServer> transportServer = HttpTransportServer.class;
+    //private Class<? extends TransportServer> transportServer = HttpTransportServer.class;
+
+    private Class<? extends TransportServer> transportServer = NettyTransportServer.class;
 
     private Class<? extends Encoder> encoder = JSONEncoder.class;
 
