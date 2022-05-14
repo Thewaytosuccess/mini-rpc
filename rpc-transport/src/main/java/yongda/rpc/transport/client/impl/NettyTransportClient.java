@@ -1,6 +1,5 @@
 package yongda.rpc.transport.client.impl;
 
-import com.alibaba.fastjson.JSON;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -49,22 +48,23 @@ public class NettyTransportClient implements TransportClient {
     @SneakyThrows
     @Override
     public Response sendRequest(Request request) {
-        String requestId = UUID.randomUUID().toString();
+        String separator = "-";
+        String requestId = UUID.randomUUID().toString().replaceAll(separator,"");
         request.setRequestId(requestId);
+
+        log.info("channel id = {}",channel.id().asShortText());
 
         //预相应
         CompletableFuture<Response> promise = RpcContextHolder.getFuture(requestId);
-
-        log.info("request ============== {}", JSON.toJSONString(request));
         //send request
         channel.writeAndFlush(request).addListener(e -> {
             if(e.isSuccess()){
-                log.info("send request success =================");
+                log.info("[ -> send request success]");
             }
         });
 
         //阻塞，以获取结果
-        long timeout = 100;
+        long timeout = 10;
         return promise.get(timeout, TimeUnit.SECONDS);
     }
 

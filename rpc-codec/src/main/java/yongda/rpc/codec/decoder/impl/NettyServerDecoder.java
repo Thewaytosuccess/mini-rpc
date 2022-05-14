@@ -22,7 +22,6 @@ public class NettyServerDecoder extends ByteToMessageDecoder {
 
         //因为报文=报文长度+内容，而长度为int类型，至少占4个字节
         int minLength = 4;
-        log.info("length =============={}",byteBuf.readableBytes());
         if(byteBuf.readableBytes() < minLength){
            return;
         }

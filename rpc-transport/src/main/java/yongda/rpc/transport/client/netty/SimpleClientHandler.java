@@ -16,7 +16,6 @@ public class SimpleClientHandler extends SimpleChannelInboundHandler<Response> {
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext,
                                    Response response) {
-        log.info("获取到服务端响应===={}",response);
         RpcContextHolder.complete(response);
     }
 }

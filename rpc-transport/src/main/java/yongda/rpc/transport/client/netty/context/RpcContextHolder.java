@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @author cdl
+ */
 public class RpcContextHolder {
 
     private static final Map<String, CompletableFuture<Response>> CONTEXT =
