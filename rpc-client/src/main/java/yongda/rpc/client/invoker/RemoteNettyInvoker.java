@@ -1,10 +1,12 @@
 package yongda.rpc.client.invoker;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import yongda.rpc.client.selector.TransportSelector;
 import yongda.rpc.proto.request.Request;
 import yongda.rpc.proto.response.Response;
 import yongda.rpc.proto.service.ServiceDescriptor;
+import yongda.rpc.transport.client.TransportClient;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -41,6 +43,7 @@ public class RemoteNettyInvoker<T> implements InvocationHandler {
         //发送请求，获取服务端响应的输入流
         try {
             Response response = client.sendRequest(request);
+            log.info("response === {}", JSON.toJSONString(response));
             int successCode = 200;
             return response.getCode() == successCode ? response.getData() : response;
         } finally {

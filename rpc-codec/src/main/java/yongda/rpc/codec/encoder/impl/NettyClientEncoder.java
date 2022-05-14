@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import yongda.rpc.proto.response.Response;
+import yongda.rpc.proto.request.Request;
 
 /**
  * @author cdl
@@ -14,13 +14,13 @@ import yongda.rpc.proto.response.Response;
  * 报文定长；
  * 报文长度+内容；
  */
-public class NettyEncoder extends MessageToByteEncoder<Response> {
+public class NettyClientEncoder extends MessageToByteEncoder<Request> {
 
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext,
-                          Response response, ByteBuf byteBuf) {
+                          Request request, ByteBuf byteBuf) {
         //定义协议：报文长度 + 报文内容
-        byte[] bytes = JSON.toJSONBytes(response);
+        byte[] bytes = JSON.toJSONBytes(request);
         byteBuf.writeInt(bytes.length);
         byteBuf.writeBytes(bytes);
     }

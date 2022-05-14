@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import lombok.extern.slf4j.Slf4j;
 import yongda.rpc.proto.request.Request;
 
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
  * netty解码器
  * @author cdl
  */
-public class NettyDecoder extends ByteToMessageDecoder {
+@Slf4j
+public class NettyServerDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext,
@@ -20,6 +22,7 @@ public class NettyDecoder extends ByteToMessageDecoder {
 
         //因为报文=报文长度+内容，而长度为int类型，至少占4个字节
         int minLength = 4;
+        log.info("length =============={}",byteBuf.readableBytes());
         if(byteBuf.readableBytes() < minLength){
            return;
         }

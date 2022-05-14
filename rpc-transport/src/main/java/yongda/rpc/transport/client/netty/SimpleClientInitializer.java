@@ -3,8 +3,8 @@ package yongda.rpc.transport.client.netty;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import yongda.rpc.codec.decoder.impl.NettyDecoder;
-import yongda.rpc.codec.encoder.impl.NettyEncoder;
+import yongda.rpc.codec.decoder.impl.NettyClientDecoder;
+import yongda.rpc.codec.encoder.impl.NettyClientEncoder;
 
 /**
  * 客户端初始化器，用来设置初始化参数
@@ -23,11 +23,11 @@ public class SimpleClientInitializer extends ChannelInitializer<SocketChannel> {
 
         //编码器
         //pipe.addLast("encoder",new StringEncoder());
-        pipe.addLast("encoder",new NettyEncoder());
+        pipe.addLast("encoder",new NettyClientEncoder());
 
         //解码器
         //pipe.addLast("decoder",new StringDecoder());
-        pipe.addLast("decoder",new NettyDecoder());
+        pipe.addLast("decoder",new NettyClientDecoder());
 
         //处理器
         pipe.addLast("handler",new SimpleClientHandler());

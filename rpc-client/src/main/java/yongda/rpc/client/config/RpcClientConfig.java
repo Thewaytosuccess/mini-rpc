@@ -9,7 +9,6 @@ import yongda.rpc.codec.decoder.impl.JSONDecoder;
 import yongda.rpc.codec.encoder.impl.JSONEncoder;
 import yongda.rpc.proto.Peer;
 import yongda.rpc.transport.client.TransportClient;
-import yongda.rpc.transport.client.impl.HttpTransportClient;
 import yongda.rpc.transport.client.impl.NettyTransportClient;
 
 import java.util.Collections;

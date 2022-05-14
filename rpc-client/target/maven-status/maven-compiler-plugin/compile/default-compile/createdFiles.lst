@@ -1,5 +1,0 @@
-yongda\rpc\client\config\RpcClientConfig.class
-yongda\rpc\client\invoker\RemoteInvokerHandler.class
-yongda\rpc\client\selector\TransportSelector.class
-yongda\rpc\client\RpcClient.class
-yongda\rpc\client\selector\impl\RandomTransportSelector.class
