@@ -1,4 +1,4 @@
-package yongda;
+package yongda.service;
 
 public interface CalculateFacade {
 

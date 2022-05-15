@@ -1,6 +1,7 @@
-package yongda;
+package yongda.client;
 
 import yongda.rpc.client.RpcClient;
+import yongda.service.CalculateFacade;
 
 /**
  * 如果要通过接口，调用接口的某个方法
@@ -20,6 +21,7 @@ import yongda.rpc.client.RpcClient;
 public class TestClient {
 
     public static void main(String[] args) {
+        //todo 添加注解@Reference实现
         RpcClient client = new RpcClient();
 
         CalculateFacade proxy = client.getProxy(CalculateFacade.class);

@@ -23,6 +23,7 @@ public class RpcClientConfig {
 
     /**
      * 客户端
+     * todo 配置通过application.properties注入
      */
     //private Class<? extends TransportClient> client = HttpTransportClient.class;
     private Class<? extends TransportClient> client = NettyTransportClient.class;

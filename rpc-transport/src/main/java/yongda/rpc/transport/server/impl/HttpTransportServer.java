@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import yongda.rpc.proto.registry.ServiceRegistry;
 import yongda.rpc.transport.handler.RequestHandler;
 import yongda.rpc.transport.server.TransportServer;
 
@@ -35,6 +36,9 @@ public class HttpTransportServer implements TransportServer {
 
         //上下文注册到server中
         server.setHandler(ctx);
+
+        //服务自动注册
+        ServiceRegistry.autoRegister();
     }
 
     @SneakyThrows

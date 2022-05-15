@@ -16,6 +16,9 @@ import yongda.rpc.transport.server.impl.NettyTransportServer;
 @Data
 public class RpcServerConfig {
 
+    /**
+     * todo 配置通过application.properties注入
+     */
     //private Class<? extends TransportServer> transportServer = HttpTransportServer.class;
 
     private Class<? extends TransportServer> transportServer = NettyTransportServer.class;

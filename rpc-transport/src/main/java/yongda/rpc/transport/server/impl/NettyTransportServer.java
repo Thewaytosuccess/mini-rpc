@@ -8,10 +8,14 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import yongda.rpc.proto.registry.ServiceRegistry;
 import yongda.rpc.transport.handler.RequestHandler;
 import yongda.rpc.transport.server.TransportServer;
 import yongda.rpc.transport.server.netty.SimpleServerInitializer;
 
+/**
+ * @author cdl
+ */
 @Slf4j
 public class NettyTransportServer implements TransportServer {
 
@@ -24,8 +28,10 @@ public class NettyTransportServer implements TransportServer {
     @Override
     public void init(int port, RequestHandler handler) {
         this.port = port;
-    }
 
+        //服务自动注册
+        ServiceRegistry.autoRegister();
+    }
 
     @SneakyThrows
     @Override

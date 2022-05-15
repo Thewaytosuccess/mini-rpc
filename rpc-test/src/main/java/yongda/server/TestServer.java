@@ -1,6 +1,5 @@
-package yongda;
+package yongda.server;
 
-import yongda.rpc.proto.registry.ServiceRegistry;
 import yongda.rpc.server.RpcServer;
 
 /**
@@ -33,9 +32,6 @@ import yongda.rpc.server.RpcServer;
 public class TestServer {
 
     public static void main(String[] args) {
-        //todo 通过注解自动注册，配置管理
-        ServiceRegistry.getInstance().register(CalculateFacade.class,new CalculateService());
         new RpcServer().start();
-
     }
 }

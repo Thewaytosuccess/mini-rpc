@@ -1,5 +1,11 @@
-package yongda;
+package yongda.service;
 
+import yongda.rpc.proto.registry.Service;
+
+/**
+ * @author cdl
+ */
+@Service
 public class CalculateService implements CalculateFacade {
 
     @Override
