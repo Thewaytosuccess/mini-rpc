@@ -1,7 +1,13 @@
 package yongda.client;
 
+import lombok.Data;
 import yongda.rpc.client.RpcClient;
+import yongda.rpc.client.inject.ComponentInject;
+import yongda.rpc.proto.registry.Service;
+import yongda.rpc.proto.registry.ServiceRegistry;
 import yongda.service.CalculateFacade;
+
+import javax.annotation.Resource;
 
 /**
  * 如果要通过接口，调用接口的某个方法
@@ -18,15 +24,20 @@ import yongda.service.CalculateFacade;
  * 5.构建http请求，将序列化后的二进制数据流发送出去，得到响应的二进制流；
  * 6.将响应的二进制流，反序列化后，得到服务端的返回的对象 -- decoder；
  */
+@Service
+@Data
 public class TestClient {
 
+    @Resource
+    private CalculateFacade proxy;
+
     public static void main(String[] args) {
-        //todo 添加注解@Reference实现
-        RpcClient client = new RpcClient();
+        TestClient client = (TestClient)ComponentInject.scan(TestClient.class);
+        client.test();
+    }
 
-        CalculateFacade proxy = client.getProxy(CalculateFacade.class);
-        System.out.println("sum:"+proxy.sum(1,7));
-        System.out.println("minus:"+proxy.minus(3,4));
-
+    public void test(){
+        System.out.println("sum:" + proxy.sum(1,7));
+        System.out.println("minus:" + proxy.minus(3,4));
     }
 }

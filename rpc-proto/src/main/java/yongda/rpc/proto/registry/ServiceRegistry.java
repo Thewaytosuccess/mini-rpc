@@ -20,11 +20,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author cdl
  */
 @Slf4j
-public class ServiceRegistry {
+public class ServiceRegistry<T> {
 
     private static ServiceRegistry serviceRegistry = new ServiceRegistry();
 
-    private Map<ServiceDescriptor, ServiceInstance> registry;
+    private final Map<ServiceDescriptor, ServiceInstance> registry;
+
+    private Map<Class<T>,T> instanceRegistry = new ConcurrentHashMap<>();
 
     private ServiceRegistry(){
         this.registry = new ConcurrentHashMap<>();
@@ -34,12 +36,22 @@ public class ServiceRegistry {
         return serviceRegistry;
     }
 
+    public T getObject(Class<T> clazz){
+        return instanceRegistry.get(clazz);
+    }
+
     /**
      * 服务自动注册
      */
     @SneakyThrows
     public static void autoRegister(){
-        String servicePackage = getServicePackage();
+        String servicePackageConfig = "rpc.remote.service.package";
+        registerService(servicePackageConfig,null);
+    }
+
+    @SneakyThrows
+    public static void registerService(String servicePackageConfig,Callback callback){
+        String servicePackage = getServicePackage(servicePackageConfig);
         String servicePath = ServiceRegistry.class.getClassLoader()
                 .getResource("").getPath() +
                 servicePackage.replaceAll("\\.", "/");
@@ -54,25 +66,29 @@ public class ServiceRegistry {
                             f.getName().substring(0,f.getName().lastIndexOf(".")));
 
                     if(clazz.isAnnotationPresent(Service.class)){
-                        Class<?>[] interfaces = clazz.getInterfaces();
-                        if(Objects.isNull(interfaces) || interfaces.length == 0){
-                            throw new IllegalStateException("the interface of the " +
-                                    "service can not be null : " + clazz.getName());
+                        autoRegister(clazz);
+                        if(Objects.nonNull(callback)){
+                            callback.autowire(clazz);
                         }
-
-                        Class<Object> interfaceClass= (Class<Object>)interfaces[0];
-                        getInstance().register(interfaceClass, ReflectionUtils.newInstance(clazz));
                     }
                 }
             }
         }
     }
 
-    @SneakyThrows
-    private static String getServicePackage(){
-        String applicationProperties = "application.properties";
-        String servicePackageConfig = "rpc.remote.service.package";
+    private static void autoRegister(Class<?> clazz){
+        Class<?>[] interfaces = clazz.getInterfaces();
+        if(Objects.isNull(interfaces) || interfaces.length == 0){
+            getInstance().instanceRegistry.putIfAbsent(clazz,ReflectionUtils.newInstance(clazz));
+        }else{
+            Class<Object> interfaceClass= (Class<Object>)interfaces[0];
+            getInstance().register(interfaceClass, ReflectionUtils.newInstance(clazz));
+        }
+    }
 
+    @SneakyThrows
+    private static String getServicePackage(String servicePackageConfig){
+        String applicationProperties = "application.properties";
         Properties properties = new Properties();
         properties.load(ServiceRegistry.class.getClassLoader().getResourceAsStream(applicationProperties));
         return properties.getProperty(servicePackageConfig);
@@ -80,11 +96,10 @@ public class ServiceRegistry {
 
     /**
      * 将接口的所有方法都注册到注册中心
-     * @param <T> 实例类型
      * @param interfaceClass 接口
      * @param instance 实例
      */
-    private <T> void register(Class<T> interfaceClass, T instance){
+    private void register(Class<T> interfaceClass, T instance){
         //根据接口获取所有的公共方法
         Method[] publicMethods = ReflectionUtils.getPublicMethods(interfaceClass);
 
