@@ -2,6 +2,7 @@ package yongda.rpc.proto.registry;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import yongda.rpc.common.ConfigContext;
 import yongda.rpc.proto.request.Request;
 import yongda.rpc.proto.service.ServiceDescriptor;
 import yongda.rpc.common.ReflectionUtils;
@@ -51,7 +52,7 @@ public class ServiceRegistry<T> {
 
     @SneakyThrows
     public static void registerService(String servicePackageConfig,Callback callback){
-        String servicePackage = getServicePackage(servicePackageConfig);
+        String servicePackage = ConfigContext.get(servicePackageConfig);
         String servicePath = ServiceRegistry.class.getClassLoader()
                 .getResource("").getPath() +
                 servicePackage.replaceAll("\\.", "/");
@@ -86,13 +87,7 @@ public class ServiceRegistry<T> {
         }
     }
 
-    @SneakyThrows
-    private static String getServicePackage(String servicePackageConfig){
-        String applicationProperties = "application.properties";
-        Properties properties = new Properties();
-        properties.load(ServiceRegistry.class.getClassLoader().getResourceAsStream(applicationProperties));
-        return properties.getProperty(servicePackageConfig);
-    }
+
 
     /**
      * 将接口的所有方法都注册到注册中心

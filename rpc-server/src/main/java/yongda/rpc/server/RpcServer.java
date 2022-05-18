@@ -2,6 +2,7 @@ package yongda.rpc.server;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import yongda.rpc.common.ConfigContext;
 import yongda.rpc.proto.request.Request;
 import yongda.rpc.codec.decoder.Decoder;
 import yongda.rpc.codec.encoder.Encoder;
@@ -16,17 +17,35 @@ import yongda.rpc.transport.server.impl.HttpTransportServer;
 import yongda.rpc.transport.server.impl.NettyTransportServer;
 
 import java.io.IOException;
+import java.util.Objects;
 
+/**
+ * @author cdl
+ */
 @Slf4j
 public class RpcServer {
 
     private TransportServer server;
 
-    public RpcServer(){
-        this(new RpcServerConfig());
+    private RpcServerConfig initRpcServerConfig() {
+        RpcServerConfig rpcServerConfig = new RpcServerConfig();
+        String transportType ="rpc.transport.type";
+        transportType = ConfigContext.get(transportType);
+
+        String http = "http";
+        rpcServerConfig.setTransportServer(http.equals(transportType) ?
+                HttpTransportServer.class : NettyTransportServer.class);
+
+        String portConfig = "rpc.server.port";
+        portConfig = ConfigContext.get(portConfig);
+        if(Objects.nonNull(portConfig)){
+            rpcServerConfig.setPort(Integer.parseInt(portConfig));
+        }
+        return rpcServerConfig;
     }
 
-    public RpcServer(RpcServerConfig config){
+    public RpcServer(){
+        RpcServerConfig config = initRpcServerConfig();
         Class<? extends TransportServer> transportServer = config.getTransportServer();
         this.server = ReflectionUtils.newInstance(transportServer);
 

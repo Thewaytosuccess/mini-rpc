@@ -1,7 +1,10 @@
 package yongda.client;
 
 import lombok.Data;
-import yongda.rpc.client.RpcClient;
+import yongda.rpc.proto.registry.Service;
+import yongda.service.CalculateFacade;
+
+import javax.annotation.Resource;
 
 /**
  * 如果要通过接口，调用接口的某个方法
@@ -20,12 +23,15 @@ import yongda.rpc.client.RpcClient;
  *
  * @author cdl
  */
+@Service
 @Data
-public class TestClient {
+public class CalculateLocalService {
 
-    public static void main(String[] args) {
-        CalculateLocalService localService = RpcClient.getService(
-                CalculateLocalService.class);
-        localService.calculate();
+    @Resource
+    private CalculateFacade proxy;
+
+    public void calculate(){
+        System.out.println("sum:" + proxy.sum(1,7));
+        System.out.println("minus:" + proxy.minus(3,4));
     }
 }
