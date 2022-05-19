@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * 网络中的一个端点
+ * @author cdl
  */
 @Data
 @AllArgsConstructor
